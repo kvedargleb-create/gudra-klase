@@ -1,30 +1,1189 @@
 <!DOCTYPE html>
-<html lang="lv">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gudrā klase</title>
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 0; background: #f4f7fb; color: #1f2937; }
-    header { background: #2563eb; color: #fff; padding: 2rem 1rem; text-align: center; }
-    main { max-width: 800px; margin: 0 auto; padding: 1rem; }
-    .cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    .card { background: #fff; border-radius: 12px; padding: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
-    footer { text-align: center; padding: 1rem; color: #6b7280; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Чёрный маяк — декоративные маяки ручной работы</title>
+<meta name="description" content="Чёрный маяк — интернет-магазин декоративных маяков ручной работы: настольные светильники, фигурки и ночники. Свет, который ведёт домой.">
+<meta name="theme-color" content="#05070d">
+
+<!-- Шрифты: единственная внешняя зависимость -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap&subset=cyrillic" rel="stylesheet">
+
+<style>
+/* =========================================================
+   0. ПЕРЕМЕННЫЕ И БАЗА
+   ========================================================= */
+:root{
+  /* Палитра */
+  --bg-0:#05070d;
+  --bg-1:#0b1220;
+  --bg-2:#101a2e;
+  --text:#f2ede4;
+  --muted:#7a8699;
+  --accent:#ffb84d;
+  --accent-soft:rgba(255,184,77,.16);
+  --accent-glow:rgba(255,184,77,.45);
+  --line:rgba(242,237,228,.09);
+  --card:rgba(16,26,46,.55);
+
+  /* Шрифты */
+  --font-head:"Cormorant Garamond","Playfair Display",Georgia,serif;
+  --font-body:"Manrope","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  /* Размеры */
+  --nav-h:72px;
+  --maxw:1180px;
+  --radius:18px;
+  --ease:cubic-bezier(.22,.8,.24,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.65;
+  color:var(--text);
+  background:linear-gradient(180deg,var(--bg-0) 0%,var(--bg-1) 60%,var(--bg-0) 100%);
+  background-color:var(--bg-0);
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+h1,h2,h3{font-family:var(--font-head);font-weight:500;margin:0;line-height:1.1}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+::selection{background:var(--accent);color:#1a1100}
+
+.container{width:min(var(--maxw),100% - 2.5rem);margin-inline:auto}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;left:1rem;top:-4rem;z-index:200;background:var(--accent);color:#1a1100;padding:.6rem 1rem;border-radius:8px;transition:top .3s}
+.skip:focus{top:1rem}
+
+/* Общие заголовки секций */
+.eyebrow{
+  display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1rem;
+}
+.section{padding:clamp(4.5rem,10vw,8rem) 0;position:relative}
+.section-title{
+  font-size:clamp(2rem,5vw,3.4rem);letter-spacing:.08em;
+}
+.section-lead{color:var(--muted);max-width:46ch;margin-top:1rem}
+
+/* Кнопки */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  padding:.95rem 2rem;border-radius:999px;font-weight:600;font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),background .4s,color .4s,border-color .4s;
+}
+.btn-primary{
+  background:var(--accent);color:#1a1100;
+  box-shadow:0 0 0 0 var(--accent-glow),0 8px 30px -8px var(--accent-glow);
+  animation:btnPulse 3.4s ease-in-out infinite;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 0 6px rgba(255,184,77,.14),0 14px 44px -6px var(--accent-glow)}
+.btn-ghost{border:1px solid var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+@keyframes btnPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,184,77,0),0 8px 30px -8px var(--accent-glow)}
+  50%{box-shadow:0 0 0 8px rgba(255,184,77,.08),0 10px 40px -6px rgba(255,184,77,.6)}
+}
+
+/* =========================================================
+   1. НАВИГАЦИЯ
+   ========================================================= */
+.nav{
+  position:fixed;inset:0 0 auto 0;height:var(--nav-h);z-index:100;
+  display:flex;align-items:center;
+  transition:background .5s,backdrop-filter .5s,border-color .5s;
+  border-bottom:1px solid transparent;
+}
+.nav.scrolled{
+  background:rgba(5,7,13,.62);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);
+  border-bottom-color:var(--line);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;width:min(var(--maxw),100% - 2.5rem);margin-inline:auto}
+.logo{display:flex;align-items:center;gap:.7rem;font-family:var(--font-head);font-size:1.45rem;letter-spacing:.14em;font-weight:500}
+.logo svg{width:22px;height:30px;overflow:visible}
+.logo .lamp-dot{fill:var(--accent);animation:flicker 4s infinite}
+.nav-links{display:flex;align-items:center;gap:2.2rem}
+.nav-links a{
+  position:relative;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,237,228,.82);
+  padding:.3rem 0;transition:color .3s;
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;bottom:-2px;height:1px;width:100%;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease);
+}
+.nav-links a:hover{color:var(--accent)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-actions{display:flex;align-items:center;gap:.4rem}
+.icon-btn{
+  position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  transition:background .3s,color .3s;
+}
+.icon-btn:hover{background:var(--accent-soft);color:var(--accent)}
+.icon-btn svg{width:22px;height:22px}
+.cart-count{
+  position:absolute;top:2px;right:0;min-width:19px;height:19px;padding:0 5px;border-radius:999px;
+  background:var(--accent);color:#1a1100;font-size:.68rem;font-weight:700;line-height:19px;text-align:center;
+  transform:scale(0);transition:transform .3s var(--ease);
+}
+.cart-count.has{transform:scale(1)}
+.cart-count.bump{animation:bump .55s var(--ease)}
+@keyframes bump{0%{transform:scale(1)}30%{transform:scale(1.7) translateY(-3px)}60%{transform:scale(.85)}100%{transform:scale(1)}}
+.burger{display:none}
+.burger span{display:block;width:20px;height:1.5px;background:currentColor;margin:5px 0;transition:transform .35s var(--ease),opacity .25s}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* =========================================================
+   2. HERO
+   ========================================================= */
+.hero{
+  position:relative;min-height:100vh;min-height:100svh;overflow:hidden;isolation:isolate;
+  display:flex;align-items:center;
+  background:linear-gradient(180deg,#03050a 0%,#070d1a 45%,#0d1830 72%,#0a1426 100%);
+}
+.layer{position:absolute;inset:0;pointer-events:none;will-change:transform}
+
+/* Звёзды */
+.stars{position:absolute;inset:0 0 35% 0}
+.star{
+  position:absolute;border-radius:50%;background:#fff;opacity:.2;
+  animation:twinkle var(--dur,4s) ease-in-out var(--del,0s) infinite;
+}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.8)}50%{opacity:var(--max,.9);transform:scale(1.15)}}
+.shooting{
+  position:absolute;top:14%;left:62%;width:140px;height:1.5px;
+  background:linear-gradient(90deg,rgba(255,255,255,.9),transparent);
+  transform:rotate(-24deg) translateX(0);opacity:0;
+  animation:shoot 11s ease-in 3s infinite;
+}
+@keyframes shoot{
+  0%{opacity:0;transform:rotate(-24deg) translateX(0)}
+  2%{opacity:1}
+  7%{opacity:0;transform:rotate(-24deg) translateX(-380px)}
+  100%{opacity:0;transform:rotate(-24deg) translateX(-380px)}
+}
+/* Лунное свечение и дымка у горизонта */
+.moonglow{
+  position:absolute;left:-10%;top:-20%;width:70vw;height:70vw;max-width:900px;max-height:900px;
+  background:radial-gradient(circle,rgba(70,110,190,.22),transparent 62%);
+}
+.haze{
+  position:absolute;left:0;right:0;bottom:24%;height:30%;
+  background:linear-gradient(180deg,transparent,rgba(60,90,150,.16) 60%,transparent);
+}
+
+/* Маяк */
+.lighthouse{
+  position:absolute;right:clamp(1rem,11vw,12rem);bottom:calc(20% - 4px);
+  width:clamp(130px,17vw,250px);aspect-ratio:200/520;
+}
+.lighthouse svg{width:100%;height:100%;overflow:visible}
+.lamp-glow{
+  position:absolute;left:50%;top:22.7%;width:520%;aspect-ratio:1;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(255,184,77,.5) 0%,rgba(255,184,77,.16) 16%,transparent 52%);
+  animation:flicker 5s infinite;mix-blend-mode:screen;
+}
+.beam{
+  position:absolute;left:50%;top:22.7%;width:min(78vw,1250px);height:min(15vw,240px);
+  transform-origin:0 50%;margin-top:calc(min(15vw,240px) / -2);
+  background:linear-gradient(90deg,rgba(255,200,110,.78),rgba(255,184,77,.32) 32%,rgba(255,184,77,0) 92%);
+  clip-path:polygon(0 47%,100% 0,100% 100%,0 53%);
+  filter:blur(5px);mix-blend-mode:screen;
+  animation:sweep 9s ease-in-out infinite;
+}
+/* Луч вращается вокруг башни: проекция на экран сжимается до нуля и разворачивается */
+@keyframes sweep{
+  0%,100%{transform:scaleX(1);opacity:.95}
+  25%{opacity:.7}
+  50%{transform:scaleX(-1);opacity:.95}
+  75%{opacity:.7}
+}
+@keyframes flicker{
+  0%,100%{opacity:1}
+  8%{opacity:.86}
+  12%{opacity:1}
+  46%{opacity:.93}
+  50%{opacity:1}
+  78%{opacity:.88}
+  82%{opacity:1}
+}
+
+/* Море */
+.sea{position:absolute;left:-5%;right:-5%;bottom:0;overflow:hidden}
+.sea.back{height:34%}
+.sea.mid{height:27%}
+.sea.front{height:19%}
+.sea svg{position:absolute;left:0;bottom:0;width:200%;max-width:none;height:100%}
+.sea.back svg{animation:drift 52s linear infinite}
+.sea.mid svg{animation:drift 36s linear infinite reverse}
+.sea.front svg{animation:drift 24s linear infinite}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.sea.back::after,.sea.mid::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(255,184,77,.05),transparent 40%);
+}
+/* Золотая дорожка на воде под маяком */
+.glint{
+  position:absolute;right:clamp(1rem,11vw,12rem);bottom:6%;width:clamp(130px,17vw,250px);height:15%;
+  background:radial-gradient(ellipse at 50% 0,rgba(255,184,77,.35),transparent 70%);
+  filter:blur(10px);animation:flicker 5s infinite;
+}
+
+/* Туман */
+.fog{position:absolute;left:-30%;width:160%;height:36%;filter:blur(30px)}
+.fog.f1{bottom:12%;background:radial-gradient(ellipse at 30% 50%,rgba(150,175,215,.16),transparent 60%),radial-gradient(ellipse at 75% 60%,rgba(120,150,200,.13),transparent 55%);animation:fogMove 38s ease-in-out infinite alternate}
+.fog.f2{bottom:-2%;height:30%;background:radial-gradient(ellipse at 60% 50%,rgba(150,175,215,.18),transparent 60%),radial-gradient(ellipse at 15% 60%,rgba(120,150,200,.12),transparent 55%);animation:fogMove 28s ease-in-out infinite alternate-reverse}
+@keyframes fogMove{from{transform:translateX(-6%)}to{transform:translateX(8%)}}
+.vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 45%,transparent 40%,rgba(2,3,8,.65) 100%)}
+
+/* Контент hero */
+.hero-content{position:relative;z-index:5;padding-top:var(--nav-h);width:min(var(--maxw),100% - 2.5rem);margin-inline:auto}
+.hero-text{max-width:44rem}
+.hero h1{
+  font-size:clamp(2.7rem,9vw,8rem);font-weight:400;letter-spacing:.12em;line-height:1;
+  text-shadow:0 0 60px rgba(255,184,77,.18);
+}
+.hero h1 .word{display:inline-block;white-space:nowrap;margin-right:.28em}
+.hero h1 .word:last-child{margin-right:0}
+.hero h1 .ch{
+  display:inline-block;opacity:0;filter:blur(14px);transform:translateY(.25em);
+  animation:chIn 1.2s var(--ease) forwards;animation-delay:calc(.35s + var(--i) * .075s);
+}
+.hero h1 .ch.accent{color:var(--accent)}
+@keyframes chIn{to{opacity:1;filter:blur(0);transform:none}}
+.hero-sub{
+  margin-top:1.6rem;max-width:30rem;font-size:clamp(1rem,2vw,1.2rem);color:rgba(242,237,228,.82);font-weight:300;
+  opacity:0;transform:translateY(14px);animation:fadeUp 1.2s var(--ease) 1.3s forwards;
+}
+.hero .btn{margin-top:2.4rem;opacity:0;transform:translateY(14px);animation:fadeUp 1.2s var(--ease) 1.65s forwards,btnPulse 3.4s ease-in-out 3s infinite}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+
+.scroll-hint{
+  position:absolute;left:50%;bottom:1.6rem;z-index:6;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;color:var(--muted);
+  font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+  opacity:0;animation:fadeIn 1s 2.4s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+.mouse{width:24px;height:38px;border:1.5px solid rgba(242,237,228,.45);border-radius:14px;position:relative;animation:hintPulse 2.4s ease-in-out infinite}
+.mouse::before{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:var(--accent);animation:wheel 2s ease-in-out infinite}
+@keyframes wheel{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(14px)}}
+@keyframes hintPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,184,77,0)}50%{box-shadow:0 0 18px 2px rgba(255,184,77,.22)}}
+
+/* =========================================================
+   3. КАТАЛОГ
+   ========================================================= */
+.catalog{background:linear-gradient(180deg,#0a1426 0%,var(--bg-1) 18%,var(--bg-0) 100%)}
+.section-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:1.5rem;margin-bottom:clamp(2.5rem,5vw,4rem)}
+.grid{display:grid;gap:1.6rem;grid-template-columns:1fr}
+@media(min-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+
+.card{
+  position:relative;display:flex;flex-direction:column;border-radius:var(--radius);overflow:hidden;
+  background:linear-gradient(180deg,rgba(22,34,60,.6),rgba(10,16,30,.7));
+  border:1px solid var(--line);
+  transition:transform .6s var(--ease),box-shadow .6s var(--ease),border-color .6s;
+}
+.card:hover,.card:focus-within{
+  transform:translateY(-8px);border-color:rgba(255,184,77,.38);
+  box-shadow:0 30px 60px -28px rgba(0,0,0,.9),0 0 50px -10px rgba(255,184,77,.28);
+}
+.card-art{
+  position:relative;aspect-ratio:1/.92;display:grid;place-items:end center;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 60%,rgba(40,60,100,.35),transparent 70%),linear-gradient(180deg,#0a1222,#060a14);
+}
+.card-art::after{ /* тёплый ореол при наведении */
+  content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 38%,rgba(255,184,77,.3),transparent 55%);
+  opacity:0;transition:opacity .7s var(--ease);
+}
+.card:hover .card-art::after,.card:focus-within .card-art::after{opacity:1}
+.card-art svg{width:78%;height:auto;position:relative;z-index:1;transition:transform .8s var(--ease)}
+.card:hover .card-art svg{transform:scale(1.05)}
+.card-art .lamp{fill:#ffb84d;opacity:.22;transition:opacity .6s var(--ease),filter .6s}
+.card-art .halo{opacity:0;transition:opacity .7s var(--ease);transform-box:fill-box;transform-origin:center}
+.card-art .ray{opacity:0;transition:opacity .9s var(--ease)}
+.card:hover .lamp,.card:focus-within .lamp{opacity:1;filter:drop-shadow(0 0 7px rgba(255,184,77,.9))}
+.card:hover .halo,.card:focus-within .halo{opacity:1;animation:flicker 4s infinite}
+.card:hover .ray,.card:focus-within .ray{opacity:1}
+.tag{
+  position:absolute;top:1rem;left:1rem;z-index:2;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+  padding:.35rem .7rem;border-radius:999px;background:rgba(5,7,13,.6);border:1px solid var(--line);color:var(--muted);
+}
+.card-body{padding:1.4rem 1.5rem 1.6rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+.card h3{font-size:1.55rem;letter-spacing:.06em}
+.card p{color:var(--muted);font-size:.92rem;flex:1}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1rem}
+.price{font-family:var(--font-head);font-size:1.7rem;color:var(--accent);letter-spacing:.04em}
+.add{
+  padding:.7rem 1.2rem;border-radius:999px;border:1px solid rgba(255,184,77,.5);color:var(--accent);
+  font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  transition:background .35s,color .35s,transform .35s var(--ease),box-shadow .35s;
+}
+.add:hover{background:var(--accent);color:#1a1100;box-shadow:0 8px 26px -8px var(--accent-glow);transform:translateY(-2px)}
+.add.done{background:var(--accent);color:#1a1100}
+
+/* Появление при скролле */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--i,0) * 110ms)}
+.reveal.in{opacity:1;transform:none}
+
+/* =========================================================
+   4. КОРЗИНА (выдвижная панель)
+   ========================================================= */
+.overlay{
+  position:fixed;inset:0;z-index:150;background:rgba(2,4,9,.6);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility .5s;
+}
+.overlay.open{opacity:1;visibility:visible}
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:160;width:min(430px,100%);
+  display:flex;flex-direction:column;
+  background:linear-gradient(180deg,#0e1830,#070b16);border-left:1px solid var(--line);
+  box-shadow:-30px 0 80px -20px rgba(0,0,0,.8);
+  transform:translateX(104%);transition:transform .65s var(--ease),visibility .65s;visibility:hidden;
+}
+.drawer.open{transform:none;visibility:visible}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:1.4rem 1.5rem;border-bottom:1px solid var(--line)}
+.drawer-head h2{font-size:1.7rem;letter-spacing:.08em}
+.drawer-body{flex:1;overflow:auto;padding:1rem 1.5rem}
+.empty{height:100%;display:grid;place-content:center;text-align:center;gap:1rem;color:var(--muted)}
+.empty svg{width:64px;height:84px;margin:0 auto;opacity:.7}
+.line-item{
+  display:grid;grid-template-columns:64px 1fr auto;gap:1rem;align-items:center;
+  padding:1rem 0;border-bottom:1px solid var(--line);
+}
+.line-item.enter{animation:rowIn .6s var(--ease)}
+@keyframes rowIn{from{opacity:0;transform:translateX(30px);background:var(--accent-soft)}to{opacity:1;transform:none;background:transparent}}
+.thumb{width:64px;height:64px;border-radius:12px;background:#080d1a;border:1px solid var(--line);display:grid;place-items:end center;overflow:hidden}
+.thumb svg{width:100%;height:100%;padding:4px}
+.thumb .lamp{fill:#ffb84d}
+.thumb .halo,.thumb .ray{display:none}
+.line-name{font-family:var(--font-head);font-size:1.15rem;letter-spacing:.04em;line-height:1.2}
+.line-price{color:var(--muted);font-size:.85rem;margin-top:.15rem}
+.qty{display:inline-flex;align-items:center;gap:.2rem;margin-top:.5rem;border:1px solid var(--line);border-radius:999px}
+.qty button{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:1.05rem;transition:background .25s,color .25s}
+.qty button:hover{background:var(--accent-soft);color:var(--accent)}
+.qty span{min-width:1.6rem;text-align:center;font-size:.9rem;font-variant-numeric:tabular-nums}
+.line-side{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem}
+.line-total{color:var(--accent);font-family:var(--font-head);font-size:1.25rem}
+.remove{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .25s}
+.remove:hover{color:#ff7a6b}
+.drawer-foot{padding:1.4rem 1.5rem 1.6rem;border-top:1px solid var(--line);display:grid;gap:1rem}
+.total-row{display:flex;justify-content:space-between;align-items:baseline}
+.total-row span:first-child{color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-size:.78rem}
+.total-row strong{font-family:var(--font-head);font-weight:500;font-size:2rem;color:var(--accent)}
+.drawer-foot .btn{width:100%}
+.btn[disabled]{opacity:.4;pointer-events:none;animation:none}
+.success{
+  position:absolute;inset:0;z-index:3;display:grid;place-content:center;gap:1.2rem;text-align:center;padding:2rem;
+  background:linear-gradient(180deg,#0e1830,#070b16);
+  opacity:0;visibility:hidden;transition:opacity .6s var(--ease),visibility .6s;
+}
+.success.show{opacity:1;visibility:visible}
+.success .ok{
+  width:84px;height:84px;margin:0 auto;border-radius:50%;display:grid;place-items:center;
+  border:1.5px solid var(--accent);box-shadow:0 0 40px -4px var(--accent-glow);
+}
+.success .ok svg{width:38px;height:38px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40}
+.success.show .ok svg{animation:draw .9s .3s var(--ease) forwards}
+.success h3{font-size:2rem;letter-spacing:.06em}
+.success p{color:var(--muted);max-width:28ch;margin-inline:auto;font-size:.92rem}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.toast{
+  position:fixed;left:50%;bottom:1.6rem;z-index:300;transform:translate(-50%,30px);opacity:0;
+  background:rgba(14,24,48,.92);border:1px solid rgba(255,184,77,.4);color:var(--text);
+  padding:.8rem 1.4rem;border-radius:999px;font-size:.88rem;box-shadow:0 14px 40px -10px rgba(0,0,0,.8);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  transition:opacity .45s var(--ease),transform .45s var(--ease);pointer-events:none;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* =========================================================
+   5. О НАС
+   ========================================================= */
+.about-grid{display:grid;gap:clamp(2rem,6vw,5rem);align-items:center}
+@media(min-width:900px){.about-grid{grid-template-columns:1.1fr .9fr}}
+.about-text p{color:rgba(242,237,228,.78);margin-top:1.2rem;max-width:52ch}
+.quote{
+  margin:2rem 0 0;padding-left:1.4rem;border-left:2px solid var(--accent);
+  font-family:var(--font-head);font-style:italic;font-size:clamp(1.4rem,3vw,1.9rem);line-height:1.35;color:var(--text);
+}
+.about-art{
+  position:relative;aspect-ratio:1/1.05;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);
+  background:linear-gradient(180deg,#060b17,#0d1830 70%,#0a1426);
+}
+.about-art svg{position:absolute;inset:0;width:100%;height:100%}
+.about-art .abeam{transform-origin:200px 128px;animation:sweep 9s ease-in-out infinite;transform-box:view-box}
+.about-art .aflick{animation:flicker 5s infinite}
+.about-art .awave{animation:drift 20s linear infinite}
+.about-art .awave.w2{animation-duration:30s;animation-direction:reverse}
+
+/* =========================================================
+   6. ПРЕИМУЩЕСТВА
+   ========================================================= */
+.features{border-block:1px solid var(--line);background:linear-gradient(180deg,rgba(16,26,46,.35),transparent)}
+.feat-grid{display:grid;gap:2.5rem}
+@media(min-width:800px){.feat-grid{grid-template-columns:repeat(3,1fr);gap:3rem}}
+.feat{text-align:center;max-width:22rem;margin-inline:auto}
+.feat-icon{
+  width:84px;height:84px;margin:0 auto 1.4rem;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,184,77,.35);background:radial-gradient(circle,rgba(255,184,77,.12),transparent 70%);
+}
+.feat-icon svg{width:40px;height:40px;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.feat-icon svg *{stroke-dasharray:200;stroke-dashoffset:200;transition:stroke-dashoffset 1.8s var(--ease) .3s}
+.feat.in .feat-icon svg *{stroke-dashoffset:0}
+.feat h3{font-size:1.6rem;letter-spacing:.06em;margin-bottom:.6rem}
+.feat p{color:var(--muted);font-size:.95rem}
+
+/* =========================================================
+   7. ПОДВАЛ
+   ========================================================= */
+.footer{padding:clamp(4rem,8vw,6rem) 0 2rem;background:linear-gradient(180deg,var(--bg-0),#03050a)}
+.foot-grid{display:grid;gap:3rem}
+@media(min-width:860px){.foot-grid{grid-template-columns:1.3fr 1fr 1.2fr}}
+.foot-col h3{font-size:1.2rem;letter-spacing:.14em;text-transform:uppercase;font-family:var(--font-body);font-weight:600;color:var(--accent);margin-bottom:1.1rem;font-size:.78rem}
+.foot-col p,.foot-col li{color:var(--muted);font-size:.95rem}
+.foot-col li+li{margin-top:.55rem}
+.foot-col a{transition:color .3s}
+.foot-col a:hover{color:var(--accent)}
+.foot-brand .logo{margin-bottom:1rem}
+.socials{display:flex;gap:.6rem;margin-top:1.4rem}
+.socials a{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:all .35s var(--ease)}
+.socials a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 24px -8px var(--accent-glow)}
+.socials svg{width:18px;height:18px;fill:currentColor}
+.sub-form{display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
+.sub-form input{
+  flex:1 1 180px;min-width:0;padding:.9rem 1.2rem;border-radius:999px;border:1px solid var(--line);
+  background:rgba(255,255,255,.03);color:var(--text);font:inherit;font-size:.92rem;transition:border-color .3s,box-shadow .3s;
+}
+.sub-form input::placeholder{color:var(--muted)}
+.sub-form input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.sub-form .btn{padding:.9rem 1.4rem}
+.form-msg{min-height:1.4em;margin-top:.7rem;font-size:.85rem}
+.form-msg.ok{color:var(--accent)}
+.form-msg.err{color:#ff8f80}
+.copy{margin-top:3.5rem;padding-top:1.6rem;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-between;color:var(--muted);font-size:.82rem}
+
+/* =========================================================
+   АДАПТИВ
+   ========================================================= */
+@media(max-width:860px){
+  .burger{display:grid}
+  .nav-links{
+    position:fixed;top:var(--nav-h);left:0;right:0;flex-direction:column;gap:0;padding:.5rem 1.25rem 1.5rem;
+    background:rgba(5,7,13,.94);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);
+    transform:translateY(-12px);opacity:0;visibility:hidden;transition:all .45s var(--ease);
+  }
+  .nav-links.open{transform:none;opacity:1;visibility:visible}
+  .nav-links a{padding:1rem 0;width:100%;border-bottom:1px solid var(--line);font-size:.9rem}
+  .nav-links a::after{display:none}
+  .lighthouse{right:6%;bottom:calc(19% - 4px);width:clamp(100px,30vw,170px);opacity:.9}
+  .glint{right:6%;width:clamp(100px,30vw,170px)}
+  .hero{align-items:flex-start}
+  .hero-content{padding-top:calc(var(--nav-h) + 16vh)}
+  .hero-text{text-align:left}
+  .scroll-hint{bottom:1rem}
+}
+@media(max-width:520px){
+  .hero .btn{padding:.9rem 1.5rem}
+  .logo{font-size:1.2rem}
+}
+
+/* =========================================================
+   REDUCED MOTION: отключаем сложные анимации
+   ========================================================= */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.001ms!important;transition-delay:0s!important}
+  .reveal{opacity:1;transform:none}
+  .hero h1 .ch,.hero-sub,.hero .btn,.scroll-hint{opacity:1;filter:none;transform:none}
+  .beam{transform:scaleX(1);opacity:.8}
+  .shooting{display:none}
+  .layer{transform:none!important}
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>Gudrā klase</h1>
-    <p>Mācāmies kopā — gudri un ar prieku!</p>
-  </header>
-  <main>
-    <div class="cards">
-      <section class="card"><h2>Uzdevumi</h2><p>Šeit drīz būs mājasdarbi un uzdevumi.</p></section>
-      <section class="card"><h2>Materiāli</h2><p>Mācību materiāli pa priekšmetiem.</p></section>
-      <section class="card"><h2>Paziņojumi</h2><p>Svarīgākā informācija klasei.</p></section>
+<a class="skip" href="#collection">Перейти к каталогу</a>
+
+<!-- ===================== НАВИГАЦИЯ ===================== -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#top" aria-label="Чёрный маяк — на главную">
+      <svg viewBox="0 0 22 30" aria-hidden="true">
+        <path d="M7 28 9 11h4l2 17z" fill="#f2ede4"/>
+        <rect x="8" y="5" width="6" height="6" fill="#f2ede4"/>
+        <rect class="lamp-dot" x="9" y="6.4" width="4" height="3.2" rx=".6"/>
+        <path d="M7.5 5 11 1l3.5 4z" fill="#f2ede4"/>
+      </svg>
+      <span>Чёрный маяк</span>
+    </a>
+
+    <nav class="nav-links" id="navLinks" aria-label="Основная навигация">
+      <a href="#collection">Коллекция</a>
+      <a href="#about">О нас</a>
+      <a href="#delivery">Доставка</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn" id="cartBtn" aria-label="Открыть корзину, товаров: 0" aria-controls="cart" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 8h14l-1.2 11.2a1.5 1.5 0 0 1-1.5 1.3H7.7a1.5 1.5 0 0 1-1.5-1.3z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>
+        </svg>
+        <span class="cart-count" id="cartCount" aria-hidden="true">0</span>
+      </button>
+      <button class="icon-btn burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-  </main>
-  <footer>© Gudrā klase</footer>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="hero" aria-label="Чёрный маяк">
+  <div class="layer" data-depth="0.15"><div class="moonglow"></div></div>
+  <div class="layer" data-depth="0.25"><div class="stars" id="stars"></div><div class="shooting"></div></div>
+  <div class="layer" data-depth="0.4"><div class="haze"></div></div>
+
+  <!-- Маяк с вращающимся лучом -->
+  <div class="layer" data-depth="0.9">
+    <div class="lighthouse" aria-hidden="true">
+      <div class="lamp-glow"></div>
+      <div class="beam"></div>
+      <svg viewBox="0 0 200 520">
+        <defs>
+          <linearGradient id="hTower" x1="0" x2="1">
+            <stop offset="0" stop-color="#1a2338"/><stop offset=".4" stop-color="#080c16"/><stop offset="1" stop-color="#020307"/>
+          </linearGradient>
+          <linearGradient id="hRock" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#121a2c"/><stop offset="1" stop-color="#03050a"/>
+          </linearGradient>
+        </defs>
+        <!-- скала -->
+        <path d="M-10 520 20 478c10-14 28-22 46-24l68-2c20 2 38 12 48 28l18 40z" fill="url(#hRock)"/>
+        <!-- башня -->
+        <path d="M70 470 83 156h34l13 314z" fill="url(#hTower)"/>
+        <path d="M83 156 70 470" stroke="rgba(120,150,210,.28)" stroke-width="1.2"/>
+        <!-- полосы -->
+        <path d="M78.6 300h42.8l-1.6 22H80.2zM75.2 395h49.6l-1.4 22H76.6z" fill="#161f34"/>
+        <!-- галерея -->
+        <rect x="74" y="146" width="52" height="11" rx="1.5" fill="#05070d"/>
+        <path d="M76 146v-14h48v14" fill="none" stroke="#1a2338" stroke-width="1.5"/>
+        <path d="M82 132v14M92 132v14M100 132v14M108 132v14M118 132v14" stroke="#1a2338" stroke-width="1"/>
+        <!-- фонарная комната -->
+        <rect x="86" y="96" width="28" height="36" rx="2" fill="#05070d"/>
+        <rect x="90" y="101" width="20" height="26" rx="1.5" fill="#ffb84d"/>
+        <path d="M100 101v26M90 114h20" stroke="#05070d" stroke-width="1.4"/>
+        <!-- крыша -->
+        <path d="M82 96h36L100 70z" fill="#05070d"/>
+        <path d="M100 70V54" stroke="#05070d" stroke-width="2"/>
+        <circle cx="100" cy="52" r="2.4" fill="#05070d"/>
+        <path d="M117 156l13 314" stroke="rgba(255,184,77,.16)" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Море: три слоя волн -->
+  <div class="layer" data-depth="0.6"><div class="sea back"><svg id="wave1" viewBox="0 0 2880 200" preserveAspectRatio="none" aria-hidden="true"></svg></div></div>
+  <div class="layer" data-depth="0.75"><div class="glint"></div><div class="sea mid"><svg id="wave2" viewBox="0 0 2880 200" preserveAspectRatio="none" aria-hidden="true"></svg></div></div>
+  <div class="layer" data-depth="1"><div class="sea front"><svg id="wave3" viewBox="0 0 2880 200" preserveAspectRatio="none" aria-hidden="true"></svg></div></div>
+
+  <!-- Туман -->
+  <div class="layer" data-depth="0.5"><div class="fog f1"></div></div>
+  <div class="layer" data-depth="1.2"><div class="fog f2"></div></div>
+  <div class="vignette"></div>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 id="heroTitle" aria-label="Чёрный маяк">Чёрный маяк</h1>
+      <p class="hero-sub">Свет, который ведёт домой. Декоративные маяки ручной работы.</p>
+      <a class="btn btn-primary" href="#collection" id="heroCta">Смотреть коллекцию</a>
+    </div>
+  </div>
+
+  <a class="scroll-hint" href="#collection" aria-label="Прокрутить к каталогу">
+    <span class="mouse" aria-hidden="true"></span>
+    <span>Листайте</span>
+  </a>
+</section>
+
+<!-- ===================== КАТАЛОГ ===================== -->
+<section class="section catalog" id="collection" aria-labelledby="catTitle">
+  <div class="container">
+    <div class="section-head">
+      <div class="reveal">
+        <span class="eyebrow">Коллекция</span>
+        <h2 class="section-title" id="catTitle">Шесть огней<br>для вашего дома</h2>
+      </div>
+      <p class="section-lead reveal" style="--i:1">Каждый маяк собирается и расписывается вручную. Наведите курсор — и он зажжёт свой свет.</p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- ===================== О НАС ===================== -->
+<section class="section" id="about" aria-labelledby="aboutTitle">
+  <div class="container about-grid">
+    <div class="about-text">
+      <span class="eyebrow reveal">О нас</span>
+      <h2 class="section-title reveal" id="aboutTitle" style="--i:1">Маяк, который<br>всегда с вами</h2>
+      <p class="reveal" style="--i:2">«Чёрный маяк» родился в маленькой мастерской на берегу северного моря. Мы делаем маяки вручную из дерева, металла и закалённого стекла — и покрываем их матовой чернью, чтобы вечером остался только тёплый свет.</p>
+      <p class="reveal" style="--i:3">Это не просто светильники, а тихие сторожа вашего вечера: они напоминают, что даже в самую тёмную ночь есть место, куда можно вернуться.</p>
+      <blockquote class="quote reveal" style="--i:4">«Самый тёмный час — лучшее время для света».</blockquote>
+    </div>
+
+    <div class="about-art reveal" style="--i:2" role="img" aria-label="Иллюстрация: чёрный маяк на скале, луч света скользит над ночным морем">
+      <svg viewBox="0 0 400 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="aBeam" x1="0" x2="1"><stop offset="0" stop-color="#ffc46e" stop-opacity=".8"/><stop offset="1" stop-color="#ffb84d" stop-opacity="0"/></linearGradient>
+          <radialGradient id="aGlow"><stop offset="0" stop-color="#ffb84d" stop-opacity=".55"/><stop offset="1" stop-color="#ffb84d" stop-opacity="0"/></radialGradient>
+          <linearGradient id="aTower" x1="0" x2="1"><stop offset="0" stop-color="#1c2640"/><stop offset=".5" stop-color="#070b15"/><stop offset="1" stop-color="#020307"/></linearGradient>
+        </defs>
+        <g fill="#fff">
+          <circle cx="50" cy="40" r="1.2" opacity=".8"/><circle cx="120" cy="80" r="1" opacity=".5"/><circle cx="310" cy="50" r="1.4" opacity=".8"/>
+          <circle cx="360" cy="110" r="1" opacity=".6"/><circle cx="85" cy="150" r="1" opacity=".5"/><circle cx="250" cy="30" r="1" opacity=".7"/>
+        </g>
+        <circle class="aflick" cx="200" cy="128" r="110" fill="url(#aGlow)"/>
+        <g class="abeam"><path d="M200 124 600 30V230z" fill="url(#aBeam)" opacity=".9"/></g>
+        <g class="awave"><path d="M-400 330c50-14 100-14 150 0s100 14 150 0 100-14 150 0 100 14 150 0 100-14 150 0 100 14 150 0 100-14 150 0V420H-400z" fill="#0b1530"/></g>
+        <path d="M120 420c4-30 20-52 44-58l36-6 36 6c24 6 40 28 44 58z" fill="#05070d"/>
+        <path d="M178 366 188 160h24l10 206z" fill="url(#aTower)"/>
+        <path d="M185 250h30l-1 14h-28zM181 320h38l-1 14h-36z" fill="#161f34"/>
+        <rect x="182" y="152" width="36" height="9" rx="1" fill="#05070d"/>
+        <rect x="190" y="124" width="20" height="28" rx="1.5" fill="#05070d"/>
+        <rect class="aflick" x="193" y="128" width="14" height="19" rx="1" fill="#ffb84d"/>
+        <path d="M187 124h26l-13-20z" fill="#05070d"/>
+        <g class="awave w2"><path d="M-400 365c60-12 120-12 180 0s120 12 180 0 120-12 180 0 120 12 180 0 120-12 180 0 120 12 180 0V420H-400z" fill="#070d1f"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ПРЕИМУЩЕСТВА ===================== -->
+<section class="section features" id="delivery" aria-labelledby="featTitle">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:clamp(2.5rem,5vw,4rem)">
+      <span class="eyebrow">Почему мы</span>
+      <h2 class="section-title" id="featTitle">Свет с характером</h2>
+    </div>
+    <div class="feat-grid">
+      <article class="feat reveal">
+        <div class="feat-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><path d="M10 20v-8a2 2 0 0 1 4 0v6"/><path d="M14 18V8a2 2 0 0 1 4 0v10"/><path d="M18 18V7a2 2 0 0 1 4 0v11"/><path d="M22 18V9a2 2 0 0 1 4 0v12"/><path d="M26 21c0-2 4-2 4 0v5c0 6-4 10-10 10-5 0-8-3-10-7l-3-6c-.8-1.6 1.6-3 3-1.4L10 24"/></svg>
+        </div>
+        <h3>Ручная работа</h3>
+        <p>Каждый маяк собирает и красит мастер. Двух одинаковых не бывает — у каждого своя царапина характера.</p>
+      </article>
+      <article class="feat reveal" style="--i:1">
+        <div class="feat-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><path d="M14 27c0-2-4-4-4-9a10 10 0 0 1 20 0c0 5-4 7-4 9z"/><path d="M15 31h10M17 35h6"/><path d="M20 3v3M6 9l2 2M34 9l-2 2M3 19h3M34 19h3"/></svg>
+        </div>
+        <h3>Тёплый свет LED</h3>
+        <p>Мягкие 2200 K без мерцания и перегрева. Тот самый янтарный свет, как от настоящего маяка.</p>
+      </article>
+      <article class="feat reveal" style="--i:2">
+        <div class="feat-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15"/><path d="M5 20h30"/><path d="M20 5c-6 4-6 26 0 30M20 5c6 4 6 26 0 30"/></svg>
+        </div>
+        <h3>Доставка по всему миру</h3>
+        <p>Бережно упаковываем в ударопрочные коробки и отправляем в любую страну. Отслеживание — на каждом этапе.</p>
+      </article>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===================== ПОДВАЛ ===================== -->
+<footer class="footer" id="contacts">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-col foot-brand">
+        <a class="logo" href="#top"><span>Чёрный маяк</span></a>
+        <p>Декоративные маяки ручной работы. Светильники, фигурки и ночники, которые делают вечер теплее.</p>
+        <div class="socials" aria-label="Социальные сети">
+          <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21.5 4.3 2.9 11.5c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.1.8.7.8.5 0 .7-.2 1-.5l2.3-2.3 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.700c.3-1.300-.5-1.800-1.300-1.500zM8.500 13.800l9.400-5.900c.4-.3.8-.1.5.2l-7.800 7-.3 3.200z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.200A4.800 4.800 0 1 0 12 16.800 4.800 4.800 0 0 0 12 7.200zm0 7.900a3.100 3.100 0 1 1 0-6.200 3.100 3.100 0 0 1 0 6.200zM17.300 5.900a1.100 1.100 0 1 0 0 2.200 1.100 1.100 0 0 0 0-2.200zM12 2.200c-2.700 0-3 0-4.100.1-1.100 0-1.800.2-2.500.5-.7.300-1.200.6-1.800 1.200-.6.600-.9 1.100-1.200 1.800-.3.700-.4 1.400-.5 2.500C1.800 9 1.800 9.300 1.800 12s0 3 .1 4.100c.1 1.100.2 1.800.5 2.500.3.700.6 1.200 1.200 1.800.6.600 1.100.9 1.800 1.200.7.300 1.400.4 2.500.5 1.100.1 1.400.1 4.100.1s3 0 4.100-.1c1.100-.1 1.800-.2 2.500-.5.700-.3 1.200-.6 1.800-1.200.6-.6.9-1.100 1.200-1.800.3-.7.4-1.400.5-2.500.1-1.100.1-1.400.1-4.100s0-3-.1-4.100c-.1-1.100-.2-1.800-.5-2.500-.3-.7-.6-1.200-1.200-1.800-.6-.6-1.100-.9-1.800-1.200-.7-.3-1.400-.4-2.500-.5C15 2.200 14.700 2.200 12 2.200zm0 1.800c2.700 0 3 0 4 .1 1 0 1.500.2 1.900.4.500.2.800.4 1.100.8.400.3.600.6.800 1.100.2.400.3.900.4 1.900.1 1 .1 1.300.1 4s0 3-.1 4c0 1-.2 1.500-.4 1.900-.2.500-.4.800-.8 1.100-.3.400-.6.600-1.100.8-.4.200-.9.300-1.900.4-1 .1-1.300.1-4 .1s-3 0-4-.1c-1 0-1.500-.2-1.900-.4-.5-.2-.8-.4-1.100-.8-.4-.3-.6-.6-.8-1.100-.2-.4-.3-.9-.4-1.900-.1-1-.1-1.300-.1-4s0-3 .1-4c0-1 .2-1.500.4-1.900.2-.5.400-.8.800-1.100.3-.4.600-.6 1.100-.8.400-.2.900-.3 1.900-.4 1-.1 1.300-.1 4-.1z"/></svg></a>
+          <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.600 19.300c-.1-.8-.2-2 0-2.900l1.200-5s-.3-.6-.3-1.500c0-1.400.8-2.500 1.800-2.500.9 0 1.300.7 1.300 1.400 0 .9-.5 2.100-.8 3.300-.2 1 .5 1.800 1.500 1.800 1.800 0 3.200-1.900 3.200-4.600 0-2.400-1.700-4.100-4.200-4.100a4.400 4.400 0 0 0-4.600 4.400c0 .9.300 1.800.8 2.300.1.100.1.200.1.300l-.3 1.200c0 .2-.2.300-.4.200-1.300-.6-2.100-2.500-2.100-4 0-3.300 2.400-6.300 6.900-6.300 3.600 0 6.400 2.600 6.400 6 0 3.600-2.300 6.500-5.400 6.500-1 0-2-.5-2.300-1.200l-.6 2.400c-.2.900-.8 2-1.200 2.600A10 10 0 1 0 12 2z"/></svg></a>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h3>Контакты</h3>
+        <ul>
+          <li><a href="mailto:hello@chernymayak.example">hello@chernymayak.example</a></li>
+          <li><a href="tel:+79000000000">+7 (900) 000-00-00</a></li>
+          <li>Мастерская: порт, причал № 7</li>
+          <li>Ежедневно, 10:00–20:00</li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h3>Новости маяка</h3>
+        <p>Новые коллекции и редкие предложения — раз в месяц, без спама.</p>
+        <form class="sub-form" id="subForm" novalidate>
+          <label class="sr-only" for="email">Ваш e-mail</label>
+          <input type="email" id="email" name="email" placeholder="Ваш e-mail" autocomplete="email" required>
+          <button class="btn btn-primary" type="submit">Подписаться</button>
+        </form>
+        <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="copy">
+      <span>© <span id="year">2026</span> Чёрный маяк. Все права защищены.</span>
+      <span>Сделано с теплом и светом</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== КОРЗИНА ===================== -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="cart" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true" inert>
+  <div class="drawer-head">
+    <h2 id="cartTitle">Корзина</h2>
+    <button class="icon-btn" id="cartClose" aria-label="Закрыть корзину">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot">
+    <div class="total-row"><span>Итого</span><strong id="cartTotal">0 €</strong></div>
+    <button class="btn btn-primary" id="checkout" disabled>Оформить заказ</button>
+  </div>
+  <div class="success" id="success" aria-live="polite">
+    <div class="ok"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M9 21l8 8 14-17"/></svg></div>
+    <h3>Спасибо за заказ!</h3>
+    <p>Это демонстрационная заглушка: заказ не отправлялся. Но свет маяка уже в пути.</p>
+    <button class="btn btn-ghost" id="successClose">Вернуться в магазин</button>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================
+   ТОВАРЫ — меняйте названия, описания и цены здесь.
+   id — уникальный (латиницей), price — в евро, art — вид маяка на картинке:
+   guard | shore | nordic | obsidian | storm | mini
+   ========================================================= */
+const PRODUCTS = [
+  { id:'guard',    art:'guard',    tag:'Светильник', name:'Полуночный страж',    desc:'Настольный светильник на латунной подставке. Высота 32 см, тёплый LED.',               price:89  },
+  { id:'shore',    art:'shore',    tag:'Фигурка',    name:'Тёмный берег',        desc:'Фигурка маяка с домиком смотрителя. Керамика с матовой чернью.',                     price:64  },
+  { id:'nordic',   art:'nordic',   tag:'Ночник',     name:'Маяк-ночник Нордик',  desc:'Мягкий ночник с таймером и сенсорным включением. Заряжается от USB-C.',              price:49  },
+  { id:'obsidian', art:'obsidian', tag:'Светильник', name:'Обсидиан',            desc:'Граненый маяк из чёрного стекла. Свет играет на каждой грани.',                      price:120 },
+  { id:'storm',    art:'storm',    tag:'Фигурка',    name:'Штормовой дозор',     desc:'Маяк на скале среди волн: ручная роспись смолой и патиной. Высота 26 см.',           price:98  },
+  { id:'mini',     art:'mini',     tag:'Брелок',     name:'Малый маяк-брелок',   desc:'Крошечный маяк со светодиодом. Всегда при вас — на ключах или рюкзаке.',             price:19  }
+];
+
+const CURRENCY = '€';           // символ валюты
+const STORAGE_KEY = 'black-lighthouse-cart-v1';
+
+/* ---------- Вспомогательное ---------- */
+const $  = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt = n => new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(n) + ' ' + CURRENCY;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* =========================================================
+   SVG-иллюстрации маяков для карточек (стилизованные, без фото)
+   viewBox 200x240. Класс .lamp — «лампа», .halo — свечение, .ray — лучи.
+   ========================================================= */
+function lighthouseSVG(type, uid){
+  const defs = `<defs>
+    <linearGradient id="b${uid}" x1="0" x2="1"><stop offset="0" stop-color="#2a3652"/><stop offset=".45" stop-color="#0c111e"/><stop offset="1" stop-color="#03040a"/></linearGradient>
+    <radialGradient id="g${uid}"><stop offset="0" stop-color="#ffb84d" stop-opacity=".85"/><stop offset="1" stop-color="#ffb84d" stop-opacity="0"/></radialGradient>
+    <linearGradient id="r${uid}" x1="0" x2="1"><stop offset="0" stop-color="#ffb84d" stop-opacity=".75"/><stop offset="1" stop-color="#ffb84d" stop-opacity="0"/></linearGradient>
+  </defs>`;
+  const body = `url(#b${uid})`;
+  // лучи и ореол вокруг точки (x, y)
+  const light = (x, y, r = 46, ray = 90) => `
+    <circle class="halo" cx="${x}" cy="${y}" r="${r}" fill="url(#g${uid})"/>
+    <path class="ray" d="M${x} ${y-3} ${x+ray} ${y-17} V${y+17} L${x} ${y+3}z" fill="url(#r${uid})"/>
+    <path class="ray" d="M${x} ${y-3} ${x-ray} ${y-17} V${y+17} L${x} ${y+3}z" fill="url(#r${uid})" style="transform:scaleX(1)"/>`;
+  const rock = `<path d="M18 240 42 214c8-9 20-14 34-15l48-1c14 1 26 7 34 16l24 26z" fill="#070a14"/><path d="M50 214c10-6 22-9 36-9" stroke="#1b2540" stroke-width="1.5" fill="none"/>`;
+  const stripes = (y1, y2, xa, xb, c = '#232f4d') => `<path d="M${xa} ${y1}h${xb-xa}" stroke="${c}" stroke-width="5"/><path d="M${xa+1} ${y2}h${xb-xa-2}" stroke="${c}" stroke-width="5"/>`;
+  let s = '';
+  switch(type){
+    case 'guard': // высокий классический
+      s = `${rock}
+        <path d="M82 205 90 98h20l8 107z" fill="${body}"/>
+        <path d="M86 150h28M84 176h32" stroke="#26324f" stroke-width="5"/>
+        <rect x="84" y="90" width="32" height="8" rx="1" fill="#05070d"/>
+        <rect x="91" y="64" width="18" height="26" rx="2" fill="#05070d"/>
+        <rect class="lamp" x="94" y="68" width="12" height="18" rx="1.5"/>
+        <path d="M89 64h22l-11-16z" fill="#05070d"/><circle cx="100" cy="46" r="2.4" fill="#05070d"/>
+        ${light(100,77)}`; break;
+    case 'shore': // широкий с домиком
+      s = `${rock}
+        <path d="M68 205 80 112h40l12 93z" fill="${body}"/>
+        <path d="M73 160h54M70 184h60" stroke="#26324f" stroke-width="6"/>
+        <rect x="76" y="104" width="48" height="9" rx="1" fill="#05070d"/>
+        <rect x="86" y="74" width="28" height="30" rx="2" fill="#05070d"/>
+        <rect class="lamp" x="90" y="79" width="20" height="20" rx="1.5"/>
+        <path d="M82 74c4-18 14-26 18-30 4 4 14 12 18 30z" fill="#05070d"/>
+        <path d="M132 205v-26l22-12 22 12v26z" fill="#070a14" stroke="#1b2540"/>
+        <rect class="lamp" x="148" y="184" width="10" height="12" rx="1"/>
+        ${light(100,89,52,80)}`; break;
+    case 'nordic': // ночник, округлый
+      s = `<rect x="64" y="208" width="72" height="9" rx="4" fill="#05070d"/>
+        <path d="M76 208c-4-36-2-66 8-86h32c10 20 12 50 8 86z" fill="${body}"/>
+        <path d="M80 170h40" stroke="#26324f" stroke-width="5"/>
+        <rect x="82" y="112" width="36" height="12" rx="3" fill="#05070d"/>
+        <circle cx="100" cy="94" r="22" fill="#05070d"/>
+        <circle class="lamp" cx="100" cy="94" r="16"/>
+        <path d="M80 80c4-18 36-18 40 0" fill="none" stroke="#1d2842" stroke-width="2"/>
+        <circle cx="100" cy="188" r="3" fill="#ffb84d" opacity=".5"/>
+        ${light(100,94,56,70)}`; break;
+    case 'obsidian': // граненый
+      s = `<path d="M100 38 128 102 120 212H80L72 102z" fill="${body}"/>
+        <path d="M100 38v174M72 102h56M80 212 100 102 120 212" stroke="#2b3858" stroke-width="1.2" fill="none"/>
+        <path d="M100 38 128 102 100 102z" fill="#1a2440" opacity=".7"/>
+        <path d="M100 74 114 98 100 122 86 98z" fill="#05070d"/>
+        <path class="lamp" d="M100 80 109 98 100 116 91 98z"/>
+        <path d="M70 212h60" stroke="#0a0e1a" stroke-width="8"/>
+        ${light(100,98,54,86)}`; break;
+    case 'storm': // с волнами
+      s = `<path d="M-10 240V206c20-14 40-14 60 0s40 14 60 0 40-14 60 0 40 14 60 0V240z" fill="#0a1330"/>
+        ${rock}
+        <path d="M82 205 90 98h20l8 107z" fill="${body}" transform="rotate(-3 100 205)"/>
+        <g transform="rotate(-3 100 205)">
+        <path d="M86 150h28M84 176h32" stroke="#26324f" stroke-width="5"/>
+        <rect x="84" y="90" width="32" height="8" rx="1" fill="#05070d"/>
+        <rect x="91" y="64" width="18" height="26" rx="2" fill="#05070d"/>
+        <rect class="lamp" x="94" y="68" width="12" height="18" rx="1.5"/>
+        <path d="M89 64h22l-11-16z" fill="#05070d"/></g>
+        <path d="M0 222c18-10 34-10 52 0s34 10 52 0 34-10 52 0 30 10 44 4V240H0z" fill="#0d1a3d" opacity=".95"/>
+        <path d="M30 218c4-3 8-3 12 0M120 220c4-3 8-3 12 0" stroke="#3a4f86" stroke-width="1.5" fill="none"/>
+        ${light(99,77)}`; break;
+    case 'mini': // брелок
+      s = `<g transform="translate(100 140) scale(.72) translate(-100 -140)">
+        <path d="M82 205 90 98h20l8 107z" fill="${body}"/>
+        <path d="M86 150h28M84 176h32" stroke="#26324f" stroke-width="5"/>
+        <rect x="84" y="90" width="32" height="8" rx="1" fill="#05070d"/>
+        <rect x="91" y="64" width="18" height="26" rx="2" fill="#05070d"/>
+        <rect class="lamp" x="94" y="68" width="12" height="18" rx="1.5"/>
+        <path d="M89 64h22l-11-16z" fill="#05070d"/>
+        <rect x="76" y="205" width="48" height="8" rx="3" fill="#05070d"/></g>
+        <circle cx="100" cy="32" r="12" fill="none" stroke="#6a7a99" stroke-width="2.4"/>
+        <path d="M100 44v10" stroke="#6a7a99" stroke-width="2"/>
+        ${light(100,111,44,70)}`; break;
+  }
+  return `<svg viewBox="0 0 200 240" role="img" aria-hidden="true" focusable="false">${defs}${s}</svg>`;
+}
+
+/* =========================================================
+   КАТАЛОГ
+   ========================================================= */
+const grid = $('#grid');
+grid.innerHTML = PRODUCTS.map((p, i) => `
+  <article class="card reveal" style="--i:${i % 3}">
+    <div class="card-art">
+      <span class="tag">${esc(p.tag)}</span>
+      ${lighthouseSVG(p.art, 'c' + i)}
+    </div>
+    <div class="card-body">
+      <h3>${esc(p.name)}</h3>
+      <p>${esc(p.desc)}</p>
+      <div class="card-foot">
+        <span class="price">${fmt(p.price)}</span>
+        <button class="add" data-id="${esc(p.id)}" aria-label="Добавить в корзину: ${esc(p.name)}">В корзину</button>
+      </div>
+    </div>
+  </article>`).join('');
+
+/* =========================================================
+   КОРЗИНА
+   ========================================================= */
+const cartEl = $('#cart'), overlay = $('#overlay'), cartBody = $('#cartBody');
+const cartBtn = $('#cartBtn'), cartCount = $('#cartCount'), cartTotal = $('#cartTotal');
+const checkoutBtn = $('#checkout'), successEl = $('#success');
+let lastAdded = null;
+let lastFocus = null;
+
+// Загрузка из localStorage (с защитой от повреждённых данных)
+function loadCart(){
+  try{
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    const clean = {};
+    for (const p of PRODUCTS){
+      const q = Number(raw[p.id]);
+      if (q > 0) clean[p.id] = Math.min(Math.floor(q), 99);
+    }
+    return clean;
+  }catch(e){ return {}; }
+}
+function saveCart(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); }catch(e){ /* приватный режим и т.п. */ }
+}
+let cart = loadCart();
+
+const productById = id => PRODUCTS.find(p => p.id === id);
+const totalQty = () => Object.values(cart).reduce((a, b) => a + b, 0);
+const totalSum = () => Object.entries(cart).reduce((s, [id, q]) => s + productById(id).price * q, 0);
+
+function renderCart(){
+  const ids = Object.keys(cart);
+  if (!ids.length){
+    cartBody.innerHTML = `<div class="empty">
+      <svg viewBox="0 0 40 60" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M14 56 17 24h6l3 32z"/><rect x="15" y="12" width="10" height="12"/><path d="M14 12 20 4l6 8"/></svg>
+      <p>В корзине пока темно.<br>Выберите маяк, который зажжёт ваш вечер.</p></div>`;
+  } else {
+    cartBody.innerHTML = ids.map(id => {
+      const p = productById(id), q = cart[id];
+      return `<div class="line-item${id === lastAdded ? ' enter' : ''}" data-id="${esc(id)}">
+        <div class="thumb">${lighthouseSVG(p.art, 't' + id)}</div>
+        <div>
+          <div class="line-name">${esc(p.name)}</div>
+          <div class="line-price">${fmt(p.price)}</div>
+          <div class="qty" role="group" aria-label="Количество: ${esc(p.name)}">
+            <button data-act="dec" aria-label="Уменьшить количество">−</button>
+            <span aria-live="polite">${q}</span>
+            <button data-act="inc" aria-label="Увеличить количество">+</button>
+          </div>
+        </div>
+        <div class="line-side">
+          <span class="line-total">${fmt(p.price * q)}</span>
+          <button class="remove" data-act="rm" aria-label="Удалить: ${esc(p.name)}">Удалить</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  const n = totalQty();
+  cartCount.textContent = n;
+  cartCount.classList.toggle('has', n > 0);
+  cartTotal.textContent = fmt(totalSum());
+  checkoutBtn.disabled = n === 0;
+  cartBtn.setAttribute('aria-label', 'Открыть корзину, товаров: ' + n);
+  lastAdded = null;
+}
+
+function bumpCounter(){
+  cartCount.classList.remove('bump'); void cartCount.offsetWidth; cartCount.classList.add('bump');
+}
+
+function addToCart(id){
+  cart[id] = Math.min((cart[id] || 0) + 1, 99);
+  lastAdded = id;
+  saveCart(); renderCart(); bumpCounter();
+  toast('«' + productById(id).name + '» добавлен в корзину');
+}
+
+// Кнопки «В корзину»
+grid.addEventListener('click', e => {
+  const btn = e.target.closest('.add'); if (!btn) return;
+  addToCart(btn.dataset.id);
+  btn.classList.add('done'); btn.textContent = 'Добавлено ✓';
+  setTimeout(() => { btn.classList.remove('done'); btn.textContent = 'В корзину'; }, 1400);
+});
+
+// Изменение количества и удаление
+cartBody.addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const id = b.closest('.line-item').dataset.id;
+  if (b.dataset.act === 'inc') cart[id] = Math.min(cart[id] + 1, 99);
+  if (b.dataset.act === 'dec') { cart[id]--; if (cart[id] <= 0) delete cart[id]; }
+  if (b.dataset.act === 'rm') delete cart[id];
+  saveCart(); renderCart();
+});
+
+// Открытие / закрытие панели
+function openCart(){
+  lastFocus = document.activeElement;
+  cartEl.removeAttribute('inert'); cartEl.setAttribute('aria-hidden', 'false');
+  cartEl.classList.add('open'); overlay.classList.add('open');
+  cartBtn.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => $('#cartClose').focus(), 60);
+}
+function closeCart(){
+  cartEl.classList.remove('open'); overlay.classList.remove('open');
+  cartEl.setAttribute('inert', ''); cartEl.setAttribute('aria-hidden', 'true');
+  cartBtn.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+  successEl.classList.remove('show');
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
+cartBtn.addEventListener('click', openCart);
+$('#cartClose').addEventListener('click', closeCart);
+overlay.addEventListener('click', closeCart);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && cartEl.classList.contains('open')) closeCart();
+  // простая ловушка фокуса внутри панели
+  if (e.key === 'Tab' && cartEl.classList.contains('open')){
+    const f = $$('button:not([disabled]), a[href]', cartEl).filter(x => x.offsetParent !== null || x === document.activeElement);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
+});
+
+// Оформление заказа — красивая заглушка
+checkoutBtn.addEventListener('click', () => {
+  successEl.classList.add('show');
+  cart = {}; saveCart(); renderCart();
+  setTimeout(() => $('#successClose').focus(), 100);
+});
+$('#successClose').addEventListener('click', () => { successEl.classList.remove('show'); closeCart(); });
+
+// Всплывающее уведомление
+let toastTimer;
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+renderCart();
+
+/* =========================================================
+   НАВИГАЦИЯ: фон при скролле и мобильное меню
+   ========================================================= */
+const nav = $('#nav'), burger = $('#burger'), navLinks = $('#navLinks');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+function setMenu(open){
+  navLinks.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', String(open));
+  burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+}
+burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
+navLinks.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+
+/* =========================================================
+   HERO: заголовок по буквам, звёзды, волны, параллакс
+   ========================================================= */
+// Побуквенное появление заголовка
+(function(){
+  const h = $('#heroTitle'); const text = h.textContent.trim(); h.textContent = '';
+  let i = 0;
+  text.split(' ').forEach(word => {
+    const w = document.createElement('span'); w.className = 'word'; w.setAttribute('aria-hidden', 'true');
+    [...word].forEach(ch => {
+      const s = document.createElement('span'); s.className = 'ch'; s.textContent = ch; s.style.setProperty('--i', i++);
+      w.appendChild(s);
+    });
+    h.appendChild(w); h.appendChild(document.createTextNode(' '));
+    i += 2; // небольшая пауза между словами
+  });
+})();
+
+// Звёзды
+(function(){
+  const box = $('#stars'); const frag = document.createDocumentFragment();
+  const count = window.innerWidth < 700 ? 70 : 150;
+  for (let k = 0; k < count; k++){
+    const s = document.createElement('i'); s.className = 'star';
+    const size = Math.random() < .85 ? 1 + Math.random() * 1.2 : 2 + Math.random() * 1.2;
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${size}px;height:${size}px;` +
+      `--dur:${(3 + Math.random()*5).toFixed(2)}s;--del:${(Math.random()*6).toFixed(2)}s;--max:${(.5 + Math.random()*.5).toFixed(2)}`;
+    frag.appendChild(s);
+  }
+  box.appendChild(frag);
+})();
+
+// Волны: синусоиды, бесшовные по ширине 1440 (период делит 1440 нацело)
+(function(){
+  function wave(el, { base, amp, periods, phase = 0, top, bottom }){
+    const W = 2880, step = 24; let d = `M0 200 L0 ${base}`;
+    for (let x = 0; x <= W; x += step){
+      const y = base + Math.sin((x / 1440) * Math.PI * 2 * periods + phase) * amp
+                     + Math.sin((x / 1440) * Math.PI * 2 * periods * 2.3 + phase) * amp * .25;
+      d += ` L${x} ${y.toFixed(1)}`;
+    }
+    d += ` L${W} 200Z`;
+    el.innerHTML = `<defs><linearGradient id="${el.id}g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${bottom}"/></linearGradient></defs>
+      <path d="${d}" fill="url(#${el.id}g)"/>`;
+  }
+  wave($('#wave1'), { base: 70, amp: 9,  periods: 4, phase: 0,  top: '#13213f', bottom: '#080e1d' });
+  wave($('#wave2'), { base: 70, amp: 13, periods: 3, phase: 2,  top: '#0c1730', bottom: '#050912' });
+  wave($('#wave3'), { base: 70, amp: 16, periods: 2, phase: 4,  top: '#070d1c', bottom: '#020409' });
+})();
+
+// Параллакс: за курсором + лёгкий сдвиг при скролле
+(function(){
+  if (reduceMotion) return;
+  const hero = $('#hero'); const layers = $$('.layer', hero);
+  let tx = 0, ty = 0, cx = 0, cy = 0, visible = true, raf = null;
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width  - .5) * 2;
+    ty = ((e.clientY - r.top)  / r.height - .5) * 2;
+    kick();
+  });
+  hero.addEventListener('mouseleave', () => { tx = 0; ty = 0; kick(); });
+  new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible) kick(); }).observe(hero);
+  window.addEventListener('scroll', () => visible && kick(), { passive: true });
+
+  function kick(){ if (!raf) raf = requestAnimationFrame(frame); }
+  function frame(){
+    raf = null;
+    cx += (tx - cx) * .07; cy += (ty - cy) * .07;
+    const sy = Math.min(window.scrollY, window.innerHeight);
+    for (const l of layers){
+      const d = parseFloat(l.dataset.depth || 0);
+      l.style.transform = `translate3d(${(-cx * d * 22).toFixed(2)}px,${(-cy * d * 12 + sy * d * .18).toFixed(2)}px,0)`;
+    }
+    if (Math.abs(tx - cx) > .002 || Math.abs(ty - cy) > .002) kick();
+  }
+  frame();
+})();
+
+// Плавный скролл к якорям (с учётом высоты шапки)
+$$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+  const id = a.getAttribute('href'); if (id.length < 2) return;
+  const t = $(id); if (!t) return;
+  e.preventDefault();
+  const y = id === '#top' ? 0 : t.getBoundingClientRect().top + window.scrollY - (id === '#collection' ? 0 : 20);
+  window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
+  history.replaceState(null, '', id);
+}));
+
+/* =========================================================
+   ПОЯВЛЕНИЕ ЭЛЕМЕНТОВ ПРИ СКРОЛЛЕ
+   ========================================================= */
+(function(){
+  const els = $$('.reveal, .feat');
+  if (!('IntersectionObserver' in window)){ els.forEach(e => e.classList.add('in')); return; }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: .15, rootMargin: '0px 0px -6% 0px' });
+  els.forEach(e => io.observe(e));
+})();
+
+/* =========================================================
+   ПОДПИСКА НА НОВОСТИ (заглушка)
+   ========================================================= */
+$('#subForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const input = $('#email'), msg = $('#formMsg');
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim());
+  msg.className = 'form-msg ' + (ok ? 'ok' : 'err');
+  msg.textContent = ok ? 'Спасибо! Первое письмо придёт с тёплым светом.' : 'Проверьте адрес e-mail — кажется, в нём ошибка.';
+  if (ok) input.value = '';
+});
+
+$('#year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
