@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Violet Garage — тюнинг-студия</title>
+  <meta name="description" content="Violet Garage — студия тюнинга и обслуживания японских спорткаров.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="nav">
+    <a class="logo" href="#top">Violet<span>Garage</span></a>
+    <nav>
+      <a href="#services">Услуги</a>
+      <a href="#process">Как мы работаем</a>
+      <a href="#prices">Цены</a>
+      <a class="btn btn-small" href="#contact">Записаться</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <section class="hero">
+      <p class="eyebrow">Тюнинг-студия JDM</p>
+      <h1>Твоя машина.<br><em>Твой характер.</em></h1>
+      <p class="lead">Чип-тюнинг, подвеска, аэродинамика и покраска для японских легенд. Делаем быстро, красиво и с гарантией.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#contact">Записаться на диагностику</a>
+        <a class="btn btn-ghost" href="#services">Что мы умеем</a>
+      </div>
+      <p class="hint">↓ Листай вниз — машина поедет за тобой</p>
+    </section>
+
+    <section id="services" class="section">
+      <h2>Что мы делаем</h2>
+      <div class="cards">
+        <article class="card">
+          <span class="icon">⚡</span>
+          <h3>Чип-тюнинг</h3>
+          <p>Индивидуальная прошивка ЭБУ на диностенде. Больше отдачи без потери ресурса мотора.</p>
+        </article>
+        <article class="card">
+          <span class="icon">🛞</span>
+          <h3>Подвеска и тормоза</h3>
+          <p>Койловеры, стабилизаторы, тормозные системы. Настроим развал-схождение под твой стиль езды.</p>
+        </article>
+        <article class="card">
+          <span class="icon">🎨</span>
+          <h3>Покраска и винил</h3>
+          <p>Перламутр, матовые плёнки, аэрография. Цвет, на который будут оборачиваться на светофоре.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="process" class="section section-dark">
+      <h2>Как мы работаем</h2>
+      <ol class="steps">
+        <li><b>01</b><h3>Диагностика</h3><p>Осматриваем машину, замеряем мощность, слушаем твои пожелания.</p></li>
+        <li><b>02</b><h3>План и смета</h3><p>Согласовываем список работ, сроки и точную цену. Никаких сюрпризов.</p></li>
+        <li><b>03</b><h3>Работа</h3><p>Мастера делают своё дело, а ты получаешь фото-отчёт каждый день.</p></li>
+        <li><b>04</b><h3>Тест-драйв</h3><p>Выезжаем вместе, проверяем результат и отдаём ключи.</p></li>
+      </ol>
+    </section>
+
+    <section id="prices" class="section">
+      <h2>Цены</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Старт</h3>
+          <p class="price">от 5 000 ₽</p>
+          <ul><li>Диагностика</li><li>Замер мощности</li><li>Консультация</li></ul>
+        </article>
+        <article class="card card-hot">
+          <h3>Stage 1</h3>
+          <p class="price">от 35 000 ₽</p>
+          <ul><li>Чип-тюнинг</li><li>Впуск и выпуск</li><li>Гарантия 1 год</li></ul>
+        </article>
+        <article class="card">
+          <h3>Full Build</h3>
+          <p class="price">от 250 000 ₽</p>
+          <ul><li>Двигатель и подвеска</li><li>Аэродинамика</li><li>Покраска</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-cta">
+      <h2>Готов ехать быстрее?</h2>
+      <p>Оставь номер, и мы перезвоним в течение часа.</p>
+      <form class="form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Спасибо! Мы позвоним ✔';">
+        <input type="text" placeholder="Имя" required>
+        <input type="tel" placeholder="Телефон" required>
+        <button class="btn" type="submit">Отправить</button>
+      </form>
+    </section>
+
+    <footer class="footer">© 2026 Violet Garage · Демо-сайт</footer>
+  </main>
+
+  <!-- Дорога и машина -->
+  <div class="road" aria-hidden="true">
+    <div class="speedo"><span id="speed">0</span> км/ч</div>
+  </div>
+  <div class="car" id="car" aria-hidden="true">
+    <img src="car.png" alt="" draggable="false">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
