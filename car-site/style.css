@@ -1,0 +1,154 @@
+:root {
+  --bg: #f6f3ff;
+  --ink: #15102b;
+  --muted: #5d5878;
+  --violet: #7a2fe0;
+  --violet-dark: #4b1a99;
+  --card: #ffffff;
+  --road-h: 84px;
+  --car-w: clamp(200px, 27vw, 400px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.55;
+  padding-bottom: calc(var(--road-h) + 24px);
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Навигация ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 5vw;
+  background: rgba(246, 243, 255, .85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(122, 47, 224, .12);
+}
+.logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -.02em; }
+.logo span { color: var(--violet); }
+.nav nav { display: flex; align-items: center; gap: 26px; font-weight: 500; }
+.nav nav a:not(.btn):hover { color: var(--violet); }
+
+/* ---------- Кнопки ---------- */
+.btn {
+  display: inline-block; border: 0; cursor: pointer;
+  background: var(--violet); color: #fff;
+  padding: 14px 26px; border-radius: 999px;
+  font: 600 1rem/1 inherit; font-family: inherit;
+  box-shadow: 0 8px 22px rgba(122, 47, 224, .35);
+  transition: transform .15s, box-shadow .15s, background .15s;
+}
+.btn:hover { transform: translateY(-2px); background: var(--violet-dark); }
+.btn-small { padding: 10px 18px; font-size: .9rem; box-shadow: none; }
+.btn-ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: #fff; }
+
+/* ---------- Секции ---------- */
+.hero {
+  min-height: calc(100vh - 60px);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 6vh 5vw 14vh;
+  max-width: 1100px; margin: 0 auto;
+}
+.eyebrow { color: var(--violet); font-weight: 700; letter-spacing: .15em; text-transform: uppercase; font-size: .85rem; margin-bottom: 16px; }
+h1 { font-size: clamp(2.6rem, 8vw, 5.6rem); line-height: 1.02; letter-spacing: -.035em; font-weight: 900; }
+h1 em { font-style: normal; color: var(--violet); }
+.lead { margin: 24px 0 32px; max-width: 540px; font-size: 1.2rem; color: var(--muted); }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.hint { margin-top: 36px; color: var(--muted); font-size: .95rem; }
+
+.section { padding: 12vh 5vw; max-width: 1100px; margin: 0 auto; }
+.section h2 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.03em; margin-bottom: 40px; }
+
+.section-dark {
+  max-width: none; background: var(--ink); color: #fff;
+  padding-left: max(5vw, calc((100vw - 1000px) / 2));
+  padding-right: max(5vw, calc((100vw - 1000px) / 2));
+}
+
+/* ---------- Карточки ---------- */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+.card {
+  background: var(--card); padding: 30px; border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(21, 16, 43, .07);
+  transition: transform .2s;
+}
+.card:hover { transform: translateY(-6px); }
+.card .icon { font-size: 2rem; display: block; margin-bottom: 14px; }
+.card h3 { font-size: 1.3rem; margin-bottom: 8px; }
+.card p { color: var(--muted); }
+.card-hot { background: var(--violet); color: #fff; }
+.card-hot p, .card-hot li { color: rgba(255,255,255,.85); }
+.price { font-size: 1.9rem; font-weight: 800; color: var(--ink) !important; margin: 6px 0 14px; }
+.card-hot .price { color: #fff !important; }
+.card ul { list-style: none; color: var(--muted); }
+.card li::before { content: "✓ "; color: var(--violet); font-weight: 700; }
+.card-hot li::before { color: #fff; }
+
+/* ---------- Шаги ---------- */
+.steps { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 32px; }
+.steps b { color: var(--violet); font-size: 2.6rem; font-weight: 900; display: block; line-height: 1; margin-bottom: 10px; }
+.steps h3 { margin-bottom: 6px; font-size: 1.2rem; }
+.steps p { color: rgba(255,255,255,.7); }
+
+/* ---------- CTA ---------- */
+.section-cta { text-align: center; }
+.section-cta p { color: var(--muted); margin: -20px 0 28px; }
+.form { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.form input {
+  padding: 14px 20px; border-radius: 999px; border: 2px solid rgba(21,16,43,.15);
+  font: inherit; min-width: 200px; background: #fff;
+}
+.form input:focus { outline: none; border-color: var(--violet); }
+
+.footer { text-align: center; padding: 30px 5vw 10px; color: var(--muted); font-size: .9rem; }
+
+/* ---------- Дорога ---------- */
+.road {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  height: var(--road-h);
+  background:
+    /* разметка */
+    repeating-linear-gradient(90deg, #f3d34a 0 46px, transparent 46px 100px) center 58% / 100% 4px no-repeat,
+    linear-gradient(#34304a, #221f33);
+  border-top: 6px solid #5b5675;
+  box-shadow: 0 -10px 30px rgba(21, 16, 43, .18);
+}
+.speedo {
+  position: absolute; right: 5vw; top: 50%; transform: translateY(-50%);
+  font: 700 .85rem/1 ui-monospace, Menlo, Consolas, monospace;
+  color: #c9b6ff; background: rgba(0,0,0,.35);
+  padding: 7px 12px; border-radius: 8px; letter-spacing: .05em;
+}
+.speedo span { display: inline-block; min-width: 3ch; text-align: right; color: #fff; }
+
+/* ---------- Машина ---------- */
+.car {
+  position: fixed; left: 0; bottom: calc(var(--road-h) - 58px); z-index: 60;
+  width: var(--car-w);
+  pointer-events: none;
+  will-change: transform;
+  transform: translate3d(-120vw, 0, 0);
+  /* чтобы наклон шёл от колёс */
+  transform-origin: 65% 100%;
+}
+.car img {
+  display: block; width: 100%; height: auto; user-select: none;
+  /* линии скорости (левые ~36% картинки) гасятся через --lines */
+  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,var(--lines, 1)) 0 36.4%, #000 36.4%);
+          mask-image: linear-gradient(90deg, rgba(0,0,0,var(--lines, 1)) 0 36.4%, #000 36.4%);
+}
+
+@media (max-width: 640px) {
+  .nav nav a:not(.btn) { display: none; }
+  .speedo { display: none; }
+  :root { --road-h: 70px; }
+}
